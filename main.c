@@ -54,7 +54,7 @@ void setup(void)
     RGBLED_init();
     Motors_init();
 
-    MAP_Interrupt_enableSleepOnIsrExit();
+//    MAP_Interrupt_enableSleepOnIsrExit();
     MAP_Interrupt_enableMaster();
 }
 
@@ -65,7 +65,7 @@ int main(void)
 
     while (1)
     {
-        MAP_PCM_gotoLPM0();
+//        MAP_PCM_gotoLPM0();
     }
 }
 
@@ -105,4 +105,23 @@ void TA1_0_IRQHandler(void)
     currentStep = (currentStep + 1) % 8;
     MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE,
     TIMER_A_CAPTURECOMPARE_REGISTER_0);
+}
+
+void TA2_0_IRQHandler(void)
+{
+    // turn on only red
+    RGBLED_turnOnOnlyPin(0);
+    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
+    TIMER_A_CAPTURECOMPARE_REGISTER_0);
+//    Timer_A_setCompareValue(TIMER_A2_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_1,
+//                            500 * abs(RPM));
+}
+
+void TA2_N_IRQHandler(void)
+{
+
+    // turn on only green
+    RGBLED_turnOnOnlyPin(1);
+    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
+    TIMER_A_CAPTURECOMPARE_REGISTER_1);
 }

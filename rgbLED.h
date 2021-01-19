@@ -21,6 +21,9 @@ extern "C" {
 #define RGB_RED_PIN                                                 GPIO_PIN0
 #define RGB_GREEN_PIN                                               GPIO_PIN1
 
+#define RG_PERIOD                                                   3000
+// 500 ticks/RPM
+
 /*!
  * \brief This function configures LED2 pins as output pins
  *

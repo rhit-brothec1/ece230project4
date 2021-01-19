@@ -15,7 +15,6 @@ extern "C" {
 #define MOTOR_PINS                                                  0x00F0
 #define MOTOR_PORT                                                  GPIO_PORT_P4
 #define RPM_PERIOD                                                  21973
-// TODO
 #define SERVO_PORT                                                  GPIO_PORT_P2
 #define SERVO_PIN                                                   GPIO_PIN5
 
