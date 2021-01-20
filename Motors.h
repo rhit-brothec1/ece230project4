@@ -48,7 +48,7 @@ typedef enum _dir
  *
  * TA0 in PWM mode using CCR2 with reset/set. Sources SMCLK with a divider of 1
  *
- * TA1 in up mode using CCR0. Sources SMCLK with a divider of 2
+ * TA2 in up mode using CCR0. Sources SMCLK with a divider of 2
  *      CCR0 interrupts are enabled.
  *
  * \return None
@@ -61,6 +61,8 @@ extern void Motors_init(void);
  * This function updates the speed of the motor based on the input.
  *
  * \param RPM is the revolutions per minute the motor should be spinning at.
+ *          The period of TA2 is adjusted according to the RPM, which changes
+ *          its speed accordingly.
  *
  * \return None
  */

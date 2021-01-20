@@ -51,7 +51,7 @@ void setup(void)
     MAP_WDT_A_holdTimer();
 
     Switch_init();
-    RGBLED_init();
+//    RGBLED_init();
     Motors_init();
 
 //    MAP_Interrupt_enableSleepOnIsrExit();
@@ -93,35 +93,35 @@ void PORT1_IRQHandler(void)
     }
     update_servo(RPM);
     update_motor(RPM);
-    update_LEDs(RPM);
+//    update_LEDs(RPM);
     // Change direction based on RPM
     direction = RPM < 0 ? CCW : CW;
 }
 
 // TA1 ISR
-void TA1_0_IRQHandler(void)
+void TA2_0_IRQHandler(void)
 {
     P4->OUT = (P4->OUT & 0x0F) + (stepperSequence[direction][currentStep] << 4);
     currentStep = (currentStep + 1) % 8;
-    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE,
-    TIMER_A_CAPTURECOMPARE_REGISTER_0);
-}
-
-void TA2_0_IRQHandler(void)
-{
-    // turn on only red
-    RGBLED_turnOnOnlyPin(0);
     MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
     TIMER_A_CAPTURECOMPARE_REGISTER_0);
-//    Timer_A_setCompareValue(TIMER_A2_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_1,
-//                            500 * abs(RPM));
 }
 
-void TA2_N_IRQHandler(void)
-{
-
-    // turn on only green
-    RGBLED_turnOnOnlyPin(1);
-    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
-    TIMER_A_CAPTURECOMPARE_REGISTER_1);
-}
+//void TA2_0_IRQHandler(void)
+//{
+//    // turn on only red
+//    RGBLED_turnOnOnlyPin(0);
+//    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
+//    TIMER_A_CAPTURECOMPARE_REGISTER_0);
+////    Timer_A_setCompareValue(TIMER_A2_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_1,
+////                            500 * abs(RPM));
+//}
+//
+//void TA2_N_IRQHandler(void)
+//{
+//
+//    // turn on only green
+//    RGBLED_turnOnOnlyPin(1);
+//    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
+//    TIMER_A_CAPTURECOMPARE_REGISTER_1);
+//}

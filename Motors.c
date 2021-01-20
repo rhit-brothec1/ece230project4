@@ -37,13 +37,13 @@ extern void Motors_init(void)
             };
 
     /* Configuring Timer_A1 for Up Mode */
-    MAP_Timer_A_configureUpMode(TIMER_A1_BASE, &upConfig);
+    MAP_Timer_A_configureUpMode(TIMER_A2_BASE, &upConfig);
 
-    MAP_Interrupt_enableInterrupt(INT_TA1_0);
-    MAP_Timer_A_startCounter(TIMER_A1_BASE, TIMER_A_UP_MODE);
+    MAP_Interrupt_enableInterrupt(INT_TA2_0);
+    MAP_Timer_A_startCounter(TIMER_A2_BASE, TIMER_A_UP_MODE);
 
     MAP_Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfig);
-    MAP_Timer_A_setCompareValue(TIMER_A1_BASE,
+    MAP_Timer_A_setCompareValue(TIMER_A2_BASE,
     TIMER_A_CAPTURECOMPARE_REGISTER_0,
                                 0);
 }
@@ -51,7 +51,7 @@ extern void Motors_init(void)
 void update_motor(int RPM)
 {
     // CCR0 <- RPM_PERIOD / RPM
-    MAP_Timer_A_setCompareValue(TIMER_A1_BASE,
+    MAP_Timer_A_setCompareValue(TIMER_A2_BASE,
     TIMER_A_CAPTURECOMPARE_REGISTER_0,
                                 RPM_PERIOD / abs(RPM));
 }
