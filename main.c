@@ -17,7 +17,7 @@
  *            |            P4.7  |---> Motor
  *       S1-->|P1.1        P2.0  |---> LED2 red
  *            |            P2.1  |---> LED2 green
- *       S2-->|P1.4              |
+ *       S2-->|P1.4        P2.5  |---> Servo
  *            |                  |
  *******************************************************************************/
 /* DriverLib Includes */
@@ -51,7 +51,7 @@ void setup(void)
     MAP_WDT_A_holdTimer();
 
     Switch_init();
-//    RGBLED_init();
+    RGBLED_init();
     Motors_init();
 
 //    MAP_Interrupt_enableSleepOnIsrExit();
@@ -93,12 +93,12 @@ void PORT1_IRQHandler(void)
     }
     update_servo(RPM);
     update_motor(RPM);
-//    update_LEDs(RPM);
+    update_LEDs(RPM);
     // Change direction based on RPM
     direction = RPM < 0 ? CCW : CW;
 }
 
-// TA1 ISR
+// TA2 ISR for motor
 void TA2_0_IRQHandler(void)
 {
     P4->OUT = (P4->OUT & 0x0F) + (stepperSequence[direction][currentStep] << 4);
@@ -106,22 +106,3 @@ void TA2_0_IRQHandler(void)
     MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
     TIMER_A_CAPTURECOMPARE_REGISTER_0);
 }
-
-//void TA2_0_IRQHandler(void)
-//{
-//    // turn on only red
-//    RGBLED_turnOnOnlyPin(0);
-//    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
-//    TIMER_A_CAPTURECOMPARE_REGISTER_0);
-////    Timer_A_setCompareValue(TIMER_A2_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_1,
-////                            500 * abs(RPM));
-//}
-//
-//void TA2_N_IRQHandler(void)
-//{
-//
-//    // turn on only green
-//    RGBLED_turnOnOnlyPin(1);
-//    MAP_Timer_A_clearCaptureCompareInterrupt(TIMER_A2_BASE,
-//    TIMER_A_CAPTURECOMPARE_REGISTER_1);
-//}
