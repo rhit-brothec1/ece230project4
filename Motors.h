@@ -19,14 +19,9 @@ extern "C" {
 #define SERVO_PIN                                                   GPIO_PIN5
 
 #define SERVO_PERIOD                                                60000
-// 1400 (0.467ms)
 #define MIN_ANGLE                                                   1400
-// 7304 (2.435ms)
 #define MAX_ANGLE                                                   7304
-// 4352 (1.451ms)
 #define MIDDLE_ANGLE                                                4352
-
-// MAX-MIN/(180/15)
 #define FIFTEEN_DEGREE                                              492
 
 // Step sequences for different directions
@@ -46,10 +41,11 @@ typedef enum _dir
  * This function configures P4.4, P4.5, P4.6, and P4.7 as output pins for
  * the motor and P2.5 as an output pin for the servo.
  *
- * TA0 in PWM mode using CCR2 with reset/set. Sources SMCLK with a divider of 1
+ * TA0 in PWM mode using CCR2 with reset/set output mode.
+ * Frequency of 50Hz with servo arm in middle position initially.
  *
- * TA2 in up mode using CCR0. Sources SMCLK with a divider of 2
- *      CCR0 interrupts are enabled.
+ * TA2 in up mode using CCR0. CCR0 interrupts are enabled.
+ * Period of 1 RPM, motor at stop initially.
  *
  * \return None
  */
@@ -76,7 +72,7 @@ extern void update_motor(int RPM);
  *
  *  \param RPM is the revolutions per minute the motor should be spinning at.
  *          Based on the RPM, the servo will adjust its angle accordingly.
- *          15° for every RPM, which means RPM should range from -6 to 6.
+ *          15° for every RPM where 0° for 0 RPM.
  *
  * \return None
  */

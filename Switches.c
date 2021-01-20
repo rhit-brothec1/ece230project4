@@ -12,7 +12,7 @@
 void Switch_init(void)
 {
     GPIO_setAsInputPinWithPullUpResistor(SWITCH_PORT, SWITCH_PINS);
-    MAP_GPIO_clearInterruptFlag(SWITCH_PORT, SWITCH_PINS);
-    MAP_GPIO_enableInterrupt(SWITCH_PORT, SWITCH_PINS);
-    MAP_Interrupt_enableInterrupt(INT_PORT1);
+    GPIO_clearInterruptFlag(SWITCH_PORT, SWITCH_PINS);
+    GPIO_enableInterrupt(SWITCH_PORT, SWITCH_PINS);
+    Interrupt_enableInterrupt(INT_PORT1);
 }
